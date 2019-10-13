@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
-#include "../geometry/point.cpp"
-#include "../geometry/triangle.cpp"
+
+#include "point.hpp"
+#include "triangle.hpp"
 
 TEST(PointTests, PointCreation){
 	double x = 1.0;
@@ -53,6 +54,17 @@ TEST(TriangleTests, TriangleCreationByPointClass){
 	EXPECT_DOUBLE_EQ(y2, triangle.getPointB().getY());
 	EXPECT_DOUBLE_EQ(x3, triangle.getPointC().getX());
 	EXPECT_DOUBLE_EQ(y3, triangle.getPointC().getY());
+}
+
+TEST(TriangleTests, EmptyTriangleCreation){
+	Triangle triangle;
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getPointC().getY());
+	EXPECT_DOUBLE_EQ(0.0, triangle.getSquare());
 }
 
 TEST(TriangleTests, IsoscelesTest){

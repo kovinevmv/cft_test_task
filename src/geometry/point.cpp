@@ -1,41 +1,29 @@
-#pragma once
-#include <math.h>
-#include <iostream>
+#include "point.hpp"
 
+Point::Point(double x, double y) : x(x), y(y) {};
 
-/*
- * Simple Point class
-*/
+Point::Point () : Point(0.0, 0.0) {};
 
-class Point{
-    double x;
-    double y;
+double Point::getX() const {
+    return x;
+}
+double Point::getY() const {
+    return y;
+}
 
-public:
-    Point(double x, double y) : x(x), y(y) {};
-    Point () : Point(0.0, 0.0) {};
+void Point::setX(double x){
+    this->x = x;
+}
 
-    double getX() const {
-        return x;
-    }
-    double getY() const {
-        return y;
-    }
+void Point::setY(double y){
+    this->y = y;
+}
 
-    void setX(double x){
-        this->x = x;
-    }
+double Point::distanceToPoint(const Point& other){
+    return sqrt(pow((this->x - other.getX()), 2) +
+                    pow(this->y - other.getY(),2));
+}
 
-    void setY(double y){
-        this->y = y;
-    }
-
-    double distanceToPoint(const Point& other){
-        return sqrt(pow((this->x - other.getX()), 2) +
-                        pow(this->y - other.getY(),2));
-    }
-    
-    std::ostream& operator<<(std::ostream& os){
-        return os << x << ' ' <<  y << std::endl;
-    }
-};
+std::ostream& Point::operator<<(std::ostream& os){
+    return os << x << ' ' <<  y << std::endl;
+}
