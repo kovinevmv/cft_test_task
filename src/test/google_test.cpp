@@ -2,6 +2,7 @@
 
 #include "point.hpp"
 #include "triangle.hpp"
+#include "finder.hpp"
 
 TEST(PointTests, PointCreation){
 	double x = 1.0;
@@ -80,6 +81,85 @@ TEST(TriangleTests, NotIsoscelesTest){
 TEST(TriangleTests, TestSquare){
 	Triangle triangle(Point(1, 1), Point(-2, 4), Point(-2, -2));
 	EXPECT_DOUBLE_EQ(triangle.getSquare(), 9.0);
+}
+
+TEST(FinderTests, Test0){
+	MaxTriangleFinder maxTriangleFinder;
+	std::ifstream inputFile("../example_tests/test_0.txt");
+	maxTriangleFinder.findMaxTriangleInFile(inputFile);
+	
+	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
+	Triangle correctTriangle = Triangle(1000, 0, 0, 1000, 0, 0);
+
+	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+}
+
+TEST(FinderTests, Test1){
+	MaxTriangleFinder maxTriangleFinder;
+	std::ifstream inputFile("../example_tests/test_1.txt");
+	maxTriangleFinder.findMaxTriangleInFile(inputFile);
+
+	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
+	Triangle correctTriangle = Triangle(1000, 0, 0, 1000, 0, 0);
+
+	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+}
+
+TEST(FinderTests, Test2){
+	MaxTriangleFinder maxTriangleFinder;
+	std::ifstream inputFile("../example_tests/test_2.txt");
+	maxTriangleFinder.findMaxTriangleInFile(inputFile);
+
+	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
+	Triangle correctTriangle = Triangle(Point(-1, -1), Point(10, -1), Point(-1, 10));
+
+	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+}
+
+TEST(FinderTests, Test3){
+	MaxTriangleFinder maxTriangleFinder;
+	std::ifstream inputFile("../example_tests/test_3.txt");
+	maxTriangleFinder.findMaxTriangleInFile(inputFile);
+
+	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
+	Triangle correctTriangle = Triangle(Point(-1, -1), Point(10, -1), Point(-1, 10));
+
+	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+}
+
+TEST(FinderTests, Test4){
+	MaxTriangleFinder maxTriangleFinder;
+	std::ifstream inputFile("../example_tests/test_4.txt");
+	maxTriangleFinder.findMaxTriangleInFile(inputFile);
+	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
+	Triangle correctTriangle = Triangle(Point(0, 0), Point(0, 0), Point(0, 0));
+
+	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
+	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
+	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
+	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
+	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
+	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
 }
 
 int main(int argc, char* argv[]){

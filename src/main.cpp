@@ -1,9 +1,8 @@
 #include <fstream>
 
-#include "logic/logic.cpp"
+#include "finder.hpp"
 #include "point.hpp"
 #include "triangle.hpp"
-#include "logic/logic.cpp"
 
 
 int main(int argc, char *argv[]){
@@ -34,8 +33,8 @@ int main(int argc, char *argv[]){
         return EXIT_FAILURE;
     }
 
-    MaxTriangleFinder maxTriangleFinder(fileInput);
-    maxTriangleFinder.findMaxTriangle();
+    MaxTriangleFinder maxTriangleFinder;
+    maxTriangleFinder.findMaxTriangleInFile(fileInput);
     Triangle maxTriangle = maxTriangleFinder.getMaxIsoscelesTriangle();
     
     if (maxTriangle.getSquare() != 0.0){

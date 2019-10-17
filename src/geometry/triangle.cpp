@@ -15,7 +15,7 @@ Triangle::Triangle(const Point& a, const Point& b, const Point& c) :
 }
 
 Triangle::Triangle(double x1, double y1, double x2, double y2, double x3, double y3) : 
-        pointA(x1, y1), pointB(x2, y2), pointC(x3, y3) {}
+        Triangle(Point(x1, y1), Point(x2, y2), Point(x3, y3)) {};
 
 Triangle::Triangle() : Triangle(0.0, 0.0, 0.0, 0.0, 0.0, 0.0) {}
 
