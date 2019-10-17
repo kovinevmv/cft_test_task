@@ -35,7 +35,7 @@ if(BUILD_TESTS)
 
     execute_process (
         COMMAND bash -c "../example_tests/generator_input_files.sh ../example_tests/test_0.txt 10"
-        COMMAND bash -c "../example_tests/generator_input_files.sh ../example_tests/test_1.txt 1000"   
+        COMMAND bash -c "../example_tests/generator_input_files.sh ../example_tests/test_1.txt 3000"   
     )
 
 endif(BUILD_TESTS)

@@ -4,18 +4,48 @@
 #include "triangle.hpp"
 #include "finder.hpp"
 
+void comparePoints(const Point& a, const Point& b){
+	EXPECT_DOUBLE_EQ(a.getX(), b.getX());
+	EXPECT_DOUBLE_EQ(a.getY(), b.getY());
+}
+void comparePoints(const Point& a, double x, double y){
+	EXPECT_DOUBLE_EQ(a.getX(), x);
+	EXPECT_DOUBLE_EQ(a.getY(), y);
+}
+void compareTrianglesWithPoints(const Triangle& a, 
+					double x1, double y1, 
+					double x2, double y2, 
+					double x3, double y3){
+	EXPECT_DOUBLE_EQ(a.getPointA().getX(), x1);
+	EXPECT_DOUBLE_EQ(a.getPointA().getY(), y1);
+	EXPECT_DOUBLE_EQ(a.getPointB().getX(), x2);
+	EXPECT_DOUBLE_EQ(a.getPointB().getY(), y2);
+	EXPECT_DOUBLE_EQ(a.getPointC().getX(), x3);
+	EXPECT_DOUBLE_EQ(a.getPointC().getY(), y3);
+}
+
+void compareTriangles(const Triangle& a, const Triangle& b){
+	EXPECT_DOUBLE_EQ(a.getPointA().getX(), b.getPointA().getX());
+	EXPECT_DOUBLE_EQ(a.getPointA().getY(), b.getPointA().getY());
+	EXPECT_DOUBLE_EQ(a.getPointB().getX(), b.getPointB().getX());
+	EXPECT_DOUBLE_EQ(a.getPointB().getY(), b.getPointB().getY());
+	EXPECT_DOUBLE_EQ(a.getPointC().getX(), b.getPointC().getX());
+	EXPECT_DOUBLE_EQ(a.getPointC().getY(), b.getPointC().getY());
+	EXPECT_DOUBLE_EQ(a.getSquare(), b.getSquare());
+	EXPECT_DOUBLE_EQ(a.isIsosceles(), b.isIsosceles());
+}
+
+
 TEST(PointTests, PointCreation){
 	double x = 1.0;
 	double y = 2.0;
 	Point point(x, y);
-	EXPECT_DOUBLE_EQ(point.getX(), x);
-	EXPECT_DOUBLE_EQ(point.getY(), y);
+	comparePoints(point, x, y);
 }
 
 TEST(PointTests, EmptyPoint){
 	Point point;
-	EXPECT_DOUBLE_EQ(point.getX(), 0.0);
-	EXPECT_DOUBLE_EQ(point.getY(), 0.0);
+	comparePoints(point, 0.0, 0.0);
 }
 
 TEST(PointTests, CheckDistance){
@@ -33,12 +63,7 @@ TEST(TriangleTests, TriangleCreationByDouble){
 	double x3 = 5.0;
 	double y3 = 6.0;
 	Triangle triangle(x1, y1, x2, y2, x3, y3);
-	EXPECT_DOUBLE_EQ(x1, triangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(y1, triangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(x2, triangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(y2, triangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(x3, triangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(y3, triangle.getPointC().getY());
+	compareTrianglesWithPoints(triangle, x1, y1, x2, y2, x3, y3);
 }
 
 TEST(TriangleTests, TriangleCreationByPointClass){
@@ -49,22 +74,12 @@ TEST(TriangleTests, TriangleCreationByPointClass){
 	double x3 = 5.0;
 	double y3 = 6.0;
 	Triangle triangle(Point(x1, y1), Point(x2, y2), Point(x3, y3));
-	EXPECT_DOUBLE_EQ(x1, triangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(y1, triangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(x2, triangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(y2, triangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(x3, triangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(y3, triangle.getPointC().getY());
+	compareTrianglesWithPoints(triangle, x1, y1, x2, y2, x3, y3);
 }
 
 TEST(TriangleTests, EmptyTriangleCreation){
 	Triangle triangle;
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(0.0, triangle.getPointC().getY());
+	compareTrianglesWithPoints(triangle, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 	EXPECT_DOUBLE_EQ(0.0, triangle.getSquare());
 }
 
@@ -91,12 +106,7 @@ TEST(FinderTests, Test0){
 	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
 	Triangle correctTriangle = Triangle(1000, 0, 0, 1000, 0, 0);
 
-	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+	compareTriangles(res, correctTriangle);
 }
 
 TEST(FinderTests, Test1){
@@ -107,12 +117,7 @@ TEST(FinderTests, Test1){
 	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
 	Triangle correctTriangle = Triangle(1000, 0, 0, 1000, 0, 0);
 
-	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+	compareTriangles(res, correctTriangle);
 }
 
 TEST(FinderTests, Test2){
@@ -123,12 +128,7 @@ TEST(FinderTests, Test2){
 	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
 	Triangle correctTriangle = Triangle(Point(-1, -1), Point(10, -1), Point(-1, 10));
 
-	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+	compareTriangles(res, correctTriangle);
 }
 
 TEST(FinderTests, Test3){
@@ -139,12 +139,7 @@ TEST(FinderTests, Test3){
 	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
 	Triangle correctTriangle = Triangle(Point(-1, -1), Point(10, -1), Point(-1, 10));
 
-	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+	compareTriangles(res, correctTriangle);
 }
 
 TEST(FinderTests, Test4){
@@ -154,12 +149,7 @@ TEST(FinderTests, Test4){
 	Triangle res = maxTriangleFinder.getMaxIsoscelesTriangle();
 	Triangle correctTriangle = Triangle(Point(0, 0), Point(0, 0), Point(0, 0));
 
-	EXPECT_DOUBLE_EQ(res.getPointA().getX(), correctTriangle.getPointA().getX());
-	EXPECT_DOUBLE_EQ(res.getPointA().getY(), correctTriangle.getPointA().getY());
-	EXPECT_DOUBLE_EQ(res.getPointB().getX(), correctTriangle.getPointB().getX());
-	EXPECT_DOUBLE_EQ(res.getPointB().getY(), correctTriangle.getPointB().getY());
-	EXPECT_DOUBLE_EQ(res.getPointC().getX(), correctTriangle.getPointC().getX());
-	EXPECT_DOUBLE_EQ(res.getPointC().getY(), correctTriangle.getPointC().getY());
+	compareTriangles(res, correctTriangle);
 }
 
 int main(int argc, char* argv[]){
