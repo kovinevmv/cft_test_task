@@ -3,6 +3,7 @@
 #include "logic/logic.cpp"
 #include "point.hpp"
 #include "triangle.hpp"
+#include "logic/logic.cpp"
 
 
 int main(int argc, char *argv[]){
@@ -20,7 +21,8 @@ int main(int argc, char *argv[]){
     std::string filenameInput = argv[1];
     std::string filenameOutput = argv[2];
     
-    std::ifstream fileInput(filenameInput);
+    std::ifstream fileInput;
+    fileInput.open(filenameInput, std::ios_base::in);
     if (fileInput.fail()){
         std::cerr << "Unable open input file" << std::endl;
         return EXIT_FAILURE;
@@ -32,9 +34,13 @@ int main(int argc, char *argv[]){
         return EXIT_FAILURE;
     }
 
-    findTriangleWithMaxSquare(fileInput, fileOutput);
+    MaxTriangleFinder maxTriangleFinder(fileInput);
+    maxTriangleFinder.findMaxTriangle();
+    Triangle maxTriangle = maxTriangleFinder.getMaxIsoscelesTriangle();
     
-    fileInput.close();
+    if (maxTriangle.getSquare() != 0.0){
+        fileOutput << maxTriangle;
+    }
     fileOutput.close();
     return EXIT_SUCCESS;
 }

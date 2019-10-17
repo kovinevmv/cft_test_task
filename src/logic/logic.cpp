@@ -6,38 +6,47 @@
 #include "triangle.hpp"
 
 
-void findTriangleWithMaxSquare(std::ifstream& fileInput, std::ofstream& fileOutput){
-    std::string tmpLine;
+class MaxTriangleFinder{
     Triangle maxTriangle;
-    size_t currentIteration = 0;
+    std::ifstream fileInput;
+    
+public:
+    MaxTriangleFinder(std::ifstream& fileInput) : 
+        maxTriangle(Triangle()) {
+        fileInput.open(fileInput);
+    };
 
-    while (std::getline(fileInput, tmpLine)){
-        currentIteration++;
+    void findMaxTriangle(){
+        std::string tmpLine;
+        Triangle maxTriangle;
+        size_t currentIteration = 0;
 
-        std::istringstream iss(tmpLine);
+        while (std::getline(fileInput, tmpLine)){
+            currentIteration++;
 
-        double x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0, x3 = 0.0, y3 = 0.0;
-        if (!(iss >> x1 >> y1 >> x2 >> y2 >> x3 >> y3)) {
-            std::cerr << "Incorrect line #" << currentIteration 
-                        << ". Can't read coordinates. Skip line" << std::endl;
-            continue;
-        }
+            std::istringstream iss(tmpLine);
+            double x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0, x3 = 0.0, y3 = 0.0;
 
-        Triangle triangle(Point(x1, y1), Point(x2, y2), Point(x3, y3));
-        if (triangle.isIsosceles()){
-            double currentTriangeSquare = triangle.getSquare();
-            if (maxTriangle.getSquare() <= currentTriangeSquare){
-                maxTriangle = triangle;
+            if (!(iss >> x1 >> y1 >> x2 >> y2 >> x3 >> y3)) {
+                std::cerr << "Incorrect line #" << currentIteration 
+                            << ". Can't read coordinates. Skip line" << std::endl;
+                continue;
+            }
+
+            Triangle currentTriangle(Point(x1, y1), Point(x2, y2), Point(x3, y3));
+            if (currentTriangle.isIsosceles()){
+                double currentTriangeSquare = currentTriangle.getSquare();
+                if (maxTriangle.getSquare() <= currentTriangeSquare){
+                    maxTriangle = currentTriangle;
+                }
             }
         }
-
+        fileInput.close();
     }
 
-    // TODO remove it 
-    std::cout << "Max : " << maxTriangle.getSquare() << "\n";
-
-    if (maxTriangle.getSquare() != 0.0){
-        fileOutput << maxTriangle;
+    Triangle getMaxIsoscelesTriangle(){
+        return maxTriangle;
     }
 
 }
+
